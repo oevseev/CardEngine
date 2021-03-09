@@ -45,3 +45,14 @@ int ThousandDeal::getPlayerCount() const
 {
     return THOUSAND_PLAYER_COUNT;
 }
+
+void ThousandDeal::playCard(Card card)
+{
+    auto transitions = static_cast<ThousandState &>(*currentState).transitions();
+    for (auto &[state, transitionCard, score] : transitions) {
+        if (transitionCard == card) {
+            advance();
+            *currentState = state;
+        }
+    }
+}

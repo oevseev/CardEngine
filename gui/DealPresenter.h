@@ -23,6 +23,7 @@ public:
 signals:
     void handChanged(int playerIndex, const QVector<Card> &cards);
     void playerCountChanged(int playerCount);
+    void estimatesUpdated(const QVector<QPair<Card, int>> &estimates);
 
 public slots:
     void nextState();

@@ -22,8 +22,8 @@ int solve(ThousandState s, int alpha, int beta)
 
     if (s.currentPlayer == 1) {
         dp[s] = 0;
-        for (const auto &t : transitions) {
-            dp[s] = std::max(dp[s], solve(t.first, alpha, beta) + t.second);
+        for (const auto &[state, card, score] : transitions) {
+            dp[s] = std::max(dp[s], solve(state, alpha, beta) + score);
             alpha = std::max(alpha, dp[s]);
             if (alpha >= beta) {
                 break;
@@ -32,8 +32,8 @@ int solve(ThousandState s, int alpha, int beta)
     }
     else {
         dp[s] = INT_MAX;
-        for (const auto &t : s.transitions()) {
-            dp[s] = std::min(dp[s], solve(t.first, alpha, beta) + t.second);
+        for (const auto &[state, card, score] : s.transitions()) {
+            dp[s] = std::min(dp[s], solve(state, alpha, beta) + score);
             beta = std::min(beta, dp[s]);
             if (beta <= alpha) {
                 break;

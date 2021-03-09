@@ -15,6 +15,7 @@ public:
     ThousandDeal();
 
     [[nodiscard]] int getPlayerCount() const override;
+    void playCard(Card card) override;
 };
 
 

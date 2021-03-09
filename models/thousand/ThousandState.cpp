@@ -25,9 +25,9 @@ inline bool beats(Card card1, Card card2, Suit trump)
     return false;
 }
 
-std::vector<std::pair<ThousandState, int>> ThousandState::transitions() const
+std::vector<std::tuple<ThousandState, Card, int>> ThousandState::transitions() const
 {
-    std::vector<std::pair<ThousandState, int>> result;
+    std::vector<std::tuple<ThousandState, Card, int>> result;
 
     int cardsInTrick = 0;
     for (int i = 1; i <= NUM_CARDS; i++) {
@@ -60,10 +60,10 @@ std::vector<std::pair<ThousandState, int>> ThousandState::transitions() const
         nextState.currentPlayer = winner;
 
         if (winner == 1) {
-            result.emplace_back(nextState, trickValue);
+            result.emplace_back(nextState, Card{}, trickValue);
         }
         else {
-            result.emplace_back(nextState, 0);
+            result.emplace_back(nextState, Card{}, 0);
         }
 
         return result;
@@ -106,7 +106,7 @@ std::vector<std::pair<ThousandState, int>> ThousandState::transitions() const
             nextState.leadSuit = card.suit;
         }
 
-        result.emplace_back(nextState, 0);
+        result.emplace_back(nextState, card, 0);
 
         if (leadSuit == Suit::NONE && cardsInHand < 8) {
             bool marriage = false;
@@ -127,10 +127,10 @@ std::vector<std::pair<ThousandState, int>> ThousandState::transitions() const
                 marriageState.trump = card.suit;
 
                 if (currentPlayer == 1) {
-                    result.emplace_back(marriageState, marriageValues[static_cast<int>(marriageState.trump)]);
+                    result.emplace_back(marriageState, card, marriageValues[static_cast<int>(marriageState.trump)]);
                 }
                 else {
-                    result.emplace_back(marriageState, 0);
+                    result.emplace_back(marriageState, card, 0);
                 }
             }
         }

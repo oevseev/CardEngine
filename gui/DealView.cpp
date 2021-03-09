@@ -35,6 +35,8 @@ void DealView::setPresenter(DealPresenter *newPresenter)
                    this, SLOT(setPlayerCount(int)));
         disconnect(presenter, SIGNAL(handChanged(int, const QVector<Card> &)),
                    this, SLOT(setCards(int, const QVector<Card> &)));
+        disconnect(presenter, SIGNAL(estimatesUpdated(const QVector<QPair<Card, int>> &)),
+                   this, SLOT(setEstimates(const QVector<QPair<Card, int>> &)));
 
         disconnect(northView, SIGNAL(cardClicked(Card)),
                    presenter, SLOT(playCard(Card)));
@@ -52,6 +54,8 @@ void DealView::setPresenter(DealPresenter *newPresenter)
             this, SLOT(setPlayerCount(int)));
     connect(presenter, SIGNAL(handChanged(int, const QVector<Card> &)),
             this, SLOT(setCards(int, const QVector<Card> &)));
+    connect(presenter, SIGNAL(estimatesUpdated(const QVector<QPair<Card, int>> &)),
+            this, SLOT(setEstimates(const QVector<QPair<Card, int>> &)));
 
     connect(northView, SIGNAL(cardClicked(Card)),
             presenter, SLOT(playCard(Card)));
@@ -67,6 +71,22 @@ void DealView::setCards(int playerIndex, const QVector<Card> &cards)
 {
     if (handMapping.contains(playerIndex)) {
         handMapping[playerIndex]->setCards(cards);
+    }
+}
+
+void DealView::setEstimates(const QVector<QPair<Card, int>> &estimates)
+{
+    // TODO: Update only the current hand view
+    southView->clearEstimates();
+    northView->clearEstimates();
+    westView->clearEstimates();
+    eastView->clearEstimates();
+
+    for (const auto &[card, estimate] : estimates) {
+        southView->setEstimate(card, estimate);
+        northView->setEstimate(card, estimate);
+        westView->setEstimate(card, estimate);
+        eastView->setEstimate(card, estimate);
     }
 }
 

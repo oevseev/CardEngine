@@ -22,6 +22,10 @@ class CardView : public QWidget
 public:
     explicit CardView(QWidget *parent = nullptr);
 
+    // TODO: Maybe it's better to move it to the model layer
+    void setEstimate(Card card, int estimate);
+    void clearEstimates();
+
 signals:
     void cardClicked(Card card);
     void cardDragged(Card card);
@@ -46,9 +50,10 @@ protected:
         Card card;
         QPoint position;
         bool visible;
+        int estimate;
 
-        explicit Entry(Card card = Card{}, QPoint position = QPoint{}, bool visible = true)
-            : card(card), position(position), visible(visible)
+        explicit Entry(Card card = Card{}, QPoint position = QPoint{}, bool visible = true, int estimate = -1)
+            : card(card), position(position), visible(visible), estimate(estimate)
         {}
     };
 

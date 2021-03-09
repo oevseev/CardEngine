@@ -16,9 +16,9 @@ public:
     void nextState();
     void previousState();
     [[nodiscard]] State &getCurrentState() const;
-    void playCard(Card card);
 
     [[nodiscard]] virtual int getPlayerCount() const = 0;
+    virtual void playCard(Card card) = 0;
 
 protected:
     void advance();

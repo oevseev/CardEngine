@@ -13,7 +13,7 @@ const int THOUSAND_PLAYER_COUNT = 3;
 class ThousandState : public State
 {
 public:
-    [[nodiscard]] std::vector<std::pair<ThousandState, int>> transitions() const;
+    [[nodiscard]] std::vector<std::tuple<ThousandState, Card, int>> transitions() const;
 };
 
 namespace std

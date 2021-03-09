@@ -25,6 +25,7 @@ public:
 public slots:
     void setCards(int playerIndex, const QVector<Card> &cards);
     void setPlayerCount(int playerCount);
+    void setEstimates(const QVector<QPair<Card, int>> &estimates);
 
 private:
     DealPresenter *presenter = nullptr;

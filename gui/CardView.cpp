@@ -18,6 +18,24 @@ CardView::CardView(QWidget *parent) : QWidget(parent)
     // setAcceptDrops(true);
 }
 
+void CardView::setEstimate(Card card, int estimate)
+{
+    for (auto &entry : cardEntries) {
+        if (entry.card == card) {
+            entry.estimate = estimate;
+        }
+    }
+    repaint();
+}
+
+void CardView::clearEstimates()
+{
+    for (auto &entry : cardEntries) {
+        entry.estimate = -1;
+    }
+    repaint();
+}
+
 void CardView::dragEnterEvent(QDragEnterEvent *event)
 {
     if (event->mimeData()->hasFormat("application/x-1000card") && event->source() != this) {
@@ -79,12 +97,19 @@ void CardView::paintEvent(QPaintEvent *event)
     QWidget::paintEvent(event);
 
     QPainter painter(this);
+    painter.setPen(QPen(QColorConstants::Blue));
+    painter.setFont(QFont("Arial", 8));
+
     for (const auto &entry : cardEntries) {
         if (!entry.visible) {
             continue;
         }
         QPixmap pixmap = getCardPixmap(entry.card);
         painter.drawPixmap(entry.position, pixmap);
+        if (entry.estimate != -1) {
+            QRect rect(entry.position.x() + 1, entry.position.y() + 30, 20, 20);
+            painter.drawText(rect, QString("%1").arg(entry.estimate));
+        }
     }
 }
 

@@ -30,11 +30,3 @@ void Deal::advance()
     ++currentState;
 }
 
-void Deal::playCard(Card card)
-{
-    if (card == Card{}) {
-        return;
-    }
-    advance();
-    currentState->status[card.getId()] = CardStatus::IN_TRICK;
-}

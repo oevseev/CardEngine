@@ -49,11 +49,14 @@ void DealPresenter::evaluateCurrentState()
 
     // TODO: Support other state types
     ThousandState s(static_cast<ThousandState &>(deal->getCurrentState()));
-    int score = solve(s);
 
-    QMessageBox messageBox{};
-    messageBox.setText(QString("%1").arg(score));
-    messageBox.exec();
+    QVector<QPair<Card, int>> estimates;
+    for (const auto &[state, card, score] : s.transitions()) {
+        int estimate = solve(state);
+        estimates.append(qMakePair(card, estimate));
+    }
+
+    emit estimatesUpdated(estimates);
 }
 
 void DealPresenter::playCard(Card card)
@@ -80,4 +83,6 @@ void DealPresenter::updateAll()
         }
         emit handChanged(playerId, cards);
     }
+
+    emit estimatesUpdated({});
 }
