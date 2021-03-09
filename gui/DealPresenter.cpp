@@ -5,6 +5,9 @@
 #include "DealPresenter.h"
 
 #include <utility>
+#include <QMessageBox>
+
+#include "../solvers/ThousandSolver.h"
 
 DealPresenter::DealPresenter(QObject *parent) : QObject(parent)
 {}
@@ -36,6 +39,21 @@ void DealPresenter::previousState()
     }
     deal->previousState();
     updateAll();
+}
+
+void DealPresenter::evaluateCurrentState()
+{
+    if (deal == nullptr) {
+        return;
+    }
+
+    // TODO: Support other state types
+    ThousandState s(static_cast<ThousandState &>(deal->getCurrentState()));
+    int score = solve(s);
+
+    QMessageBox messageBox{};
+    messageBox.setText(QString("%1").arg(score));
+    messageBox.exec();
 }
 
 void DealPresenter::playCard(Card card)

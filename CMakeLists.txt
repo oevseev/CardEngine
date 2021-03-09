@@ -16,7 +16,7 @@ if(Boost_FOUND)
     include_directories(${Boost_INCLUDE_DIRS})
 endif()
 
-add_executable(${PROJECT_NAME} main.cpp gui/HandView.cpp gui/HandView.h gui/MainWindow.cpp gui/MainWindow.h models/Deal.cpp models/Deal.h models/State.cpp models/State.h gui/DealPresenter.cpp gui/DealPresenter.h gui/DealView.cpp gui/DealView.h gui/CardView.cpp gui/CardView.h models/thousand/ThousandState.cpp models/thousand/ThousandState.h models/thousand/ThousandDeal.cpp models/thousand/ThousandDeal.h gui/SetDealDialog.cpp gui/SetDealDialog.h gui/SetDealDialog.ui)
+add_executable(${PROJECT_NAME} main.cpp gui/HandView.cpp gui/HandView.h gui/MainWindow.cpp gui/MainWindow.h models/Deal.cpp models/Deal.h models/State.cpp models/State.h gui/DealPresenter.cpp gui/DealPresenter.h gui/DealView.cpp gui/DealView.h gui/CardView.cpp gui/CardView.h models/thousand/ThousandState.cpp models/thousand/ThousandState.h models/thousand/ThousandDeal.cpp models/thousand/ThousandDeal.h gui/SetDealDialog.cpp gui/SetDealDialog.h gui/SetDealDialog.ui solvers/ThousandSolver.h solvers/ThousandSolver.cpp)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "

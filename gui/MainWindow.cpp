@@ -20,6 +20,8 @@ MainWindow::MainWindow(QWidget *parent, const Qt::WindowFlags &flags)
     toolBar->addWidget(previousButton);
     auto *nextButton = new QPushButton("Next", toolBar);
     toolBar->addWidget(nextButton);
+    auto *evaluateButton = new QPushButton("Evaluate", toolBar);
+    toolBar->addWidget(evaluateButton);
 
     auto *menuBar = new QMenuBar(this);
     auto *fileMenu = new QMenu("File", menuBar);
@@ -35,6 +37,7 @@ MainWindow::MainWindow(QWidget *parent, const Qt::WindowFlags &flags)
     dealPresenter = new DealPresenter(this);
     connect(previousButton, SIGNAL(clicked(bool)), dealPresenter, SLOT(previousState()));
     connect(nextButton, SIGNAL(clicked(bool)), dealPresenter, SLOT(nextState()));
+    connect(evaluateButton, SIGNAL(clicked(bool)), dealPresenter, SLOT(evaluateCurrentState()));
 
     dealView = new DealView(this);
     dealView->setPresenter(dealPresenter);

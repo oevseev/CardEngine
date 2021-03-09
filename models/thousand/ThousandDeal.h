@@ -7,6 +7,7 @@
 
 
 #include "../Deal.h"
+#include "ThousandState.h"
 
 class ThousandDeal : public Deal
 {

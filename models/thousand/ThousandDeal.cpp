@@ -43,5 +43,5 @@ ThousandDeal::ThousandDeal()
 
 int ThousandDeal::getPlayerCount() const
 {
-    return 3;
+    return THOUSAND_PLAYER_COUNT;
 }

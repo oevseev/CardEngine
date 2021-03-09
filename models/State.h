@@ -7,6 +7,8 @@
 
 
 #include <cstddef>
+#include <boost/functional/hash.hpp>
+
 #include "Card.h"
 
 enum class CardStatus {
@@ -15,9 +17,13 @@ enum class CardStatus {
 
 struct State {
     Suit trump = Suit::NONE;
-    int currentPlayer = 0;
+    Suit leadSuit = Suit::NONE;
+    int currentPlayer = 1;
     int owner[NUM_CARDS + 1] = {0};
     CardStatus status[NUM_CARDS + 1] = {CardStatus::INACTIVE};
+
+    bool operator==(const State &rhs) const;
+    bool operator!=(const State &rhs) const;
 };
 
 

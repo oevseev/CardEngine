@@ -27,6 +27,7 @@ signals:
 public slots:
     void nextState();
     void previousState();
+    void evaluateCurrentState();
 
     void playCard(Card card);
 
