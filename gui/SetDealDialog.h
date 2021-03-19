@@ -9,7 +9,7 @@
 #include <QLineEdit>
 
 #include "../models/Card.h"
-#include "../models/thousand/ThousandDeal.h"
+#include "../models/Deal.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui
@@ -26,10 +26,10 @@ public:
     explicit SetDealDialog(QWidget *parent = nullptr);
     ~SetDealDialog() override;
 
-    [[nodiscard]] std::shared_ptr<ThousandDeal> makeDeal() const;
+    [[nodiscard]] std::shared_ptr<Deal> makeDeal() const;
 
 private:
-    void setCards(ThousandDeal &deal, QLineEdit *lineEdit, int playerIndex, Suit suit) const;
+    void setCards(Deal &deal, QLineEdit *lineEdit, int playerIndex, Suit suit) const;
 
     Ui::SetDealDialog *ui;
 };

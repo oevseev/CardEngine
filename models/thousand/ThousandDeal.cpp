@@ -52,36 +52,6 @@ std::pair<int, std::vector<ThousandState>> ThousandDeal::evaluateState(Solver &s
     return solver.evaluate(*this, state);
 }
 
-bool ThousandDeal::canPlayCard(const ThousandState &state, Card card) const
-{
-    // TODO: Pass some context to reuse already calculated information
-
-    if (!DealImpl::canPlayCard(state, card)) {
-        return false;
-    }
-
-    bool hasTrumps = false, hasLeadSuit = false;
-    for (int i = 1; i <= NUM_CARDS; i++) {
-        if (state.status[i] != CardStatus::IN_HAND || state.owner[i] != state.currentPlayer) {
-            continue;
-        }
-        Card cardInHand(i);
-        hasTrumps |= cardInHand.suit == state.trump;
-        hasLeadSuit |= cardInHand.suit == state.leadSuit;
-    }
-
-    if (state.leadSuit != Suit::NONE) {
-        if (hasLeadSuit && card.suit != state.leadSuit) {
-            return false;
-        }
-        if (!hasLeadSuit && hasTrumps && card.suit != state.trump) {
-            return false;
-        }
-    }
-
-    return true;
-}
-
 std::pair<ThousandState, int> ThousandDeal::playCard(const ThousandState &state, Card card, int player) const
 {
     bool marriage = false;

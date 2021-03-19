@@ -66,6 +66,26 @@ bool DealImpl<StateT>::canPlayCard(const StateT &state, Card card) const
     {
         return false;
     }
+
+    bool hasTrumps = false, hasLeadSuit = false;
+    for (int i = 1; i <= NUM_CARDS; i++) {
+        if (state.status[i] != CardStatus::IN_HAND || state.owner[i] != state.currentPlayer) {
+            continue;
+        }
+        Card cardInHand(i);
+        hasTrumps |= cardInHand.suit == getTrump();
+        hasLeadSuit |= cardInHand.suit == state.leadSuit;
+    }
+
+    if (state.leadSuit != Suit::NONE) {
+        if (hasLeadSuit && card.suit != state.leadSuit) {
+            return false;
+        }
+        if (!hasLeadSuit && hasTrumps && card.suit != getTrump()) {
+            return false;
+        }
+    }
+
     return true;
 }
 

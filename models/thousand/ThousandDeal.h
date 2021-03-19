@@ -17,7 +17,6 @@ public:
     [[nodiscard]] Suit getTrump() const override;
 
     std::pair<int, std::vector<ThousandState>> evaluateState(Solver &solver, const ThousandState &state) const override;
-    [[nodiscard]] bool canPlayCard(const ThousandState &state, Card card) const override;
     [[nodiscard]] std::pair<ThousandState, int> playCard(const ThousandState &state, Card card, int player) const override;
 };
 

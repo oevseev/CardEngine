@@ -7,13 +7,22 @@
 #include "SetDealDialog.h"
 #include "ui_SetDealDialog.h"
 
+#include "../models/preferans/PreferansDeal.h"
+
 const QMap<char, Rank> charToRank = {
     {'A', Rank::ACE},
     {'K', Rank::KING},
     {'Q', Rank::QUEEN},
     {'J', Rank::JACK},
     {'T', Rank::TEN},
-    {'9', Rank::NINE}
+    {'9', Rank::NINE},
+    {'8', Rank::EIGHT},
+    {'7', Rank::SEVEN},
+    {'6', Rank::SIX},
+    {'5', Rank::FIVE},
+    {'4', Rank::FOUR},
+    {'3', Rank::THREE},
+    {'2', Rank::TWO}
 };
 
 SetDealDialog::SetDealDialog(QWidget *parent)
@@ -28,9 +37,9 @@ SetDealDialog::~SetDealDialog()
     delete ui;
 }
 
-std::shared_ptr<ThousandDeal> SetDealDialog::makeDeal() const
+std::shared_ptr<Deal> SetDealDialog::makeDeal() const
 {
-    auto deal = std::make_shared<ThousandDeal>();
+    auto deal = std::make_shared<PreferansDeal>();
 
     setCards(*deal, ui->southSpades, 1, Suit::SPADES);
     setCards(*deal, ui->southClubs, 1, Suit::CLUBS);
@@ -50,7 +59,7 @@ std::shared_ptr<ThousandDeal> SetDealDialog::makeDeal() const
     return deal;
 }
 
-void SetDealDialog::setCards(ThousandDeal &deal, QLineEdit *lineEdit, int playerIndex, Suit suit) const
+void SetDealDialog::setCards(Deal &deal, QLineEdit *lineEdit, int playerIndex, Suit suit) const
 {
     for (char c : lineEdit->text().toStdString()) {
         if (charToRank.contains(c)) {
