@@ -5,7 +5,6 @@
 #ifndef DEALVIEW_H
 #define DEALVIEW_H
 
-
 #include <QWidget>
 
 #include "../models/State.h"
@@ -37,6 +36,5 @@ private:
 
     QMap<int, HandView *> handMapping;
 };
-
 
 #endif //DEALVIEW_H

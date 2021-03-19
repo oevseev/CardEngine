@@ -6,9 +6,6 @@
 
 bool State::operator==(const State &rhs) const
 {
-    if (trump != rhs.trump) {
-        return false;
-    }
     if (leadSuit != rhs.leadSuit) {
         return false;
     }
@@ -26,4 +23,23 @@ bool State::operator==(const State &rhs) const
 bool State::operator!=(const State &rhs) const
 {
     return !(rhs == *this);
+}
+
+std::size_t State::hash() const
+{
+    std::size_t result = 0;
+
+    boost::hash_combine(result, leadSuit);
+    boost::hash_combine(result, currentPlayer);
+    for (int i = 1; i <= NUM_CARDS; i++) {
+        boost::hash_combine(result, status[i]);
+        boost::hash_combine(result, owner[i]);
+    }
+
+    return result;
+}
+
+std::size_t std::hash<State>::operator()(State const &s) const noexcept
+{
+    return s.hash();
 }

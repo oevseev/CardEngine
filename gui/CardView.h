@@ -5,7 +5,6 @@
 #ifndef CARDVIEW_H
 #define CARDVIEW_H
 
-
 #include <QDragEnterEvent>
 #include <QDragMoveEvent>
 #include <QDropEvent>
@@ -46,7 +45,8 @@ protected:
     void hideCard(Card card);
     void showCard(Card card);
 
-    struct Entry {
+    struct Entry
+    {
         Card card;
         QPoint position;
         bool visible;
@@ -68,6 +68,5 @@ private:
     static QHash<int, QPixmap> cardPixmaps;
     QPoint lastClickPos;
 };
-
 
 #endif //CARDVIEW_H

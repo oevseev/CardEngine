@@ -7,8 +7,6 @@
 #include <utility>
 #include <QMessageBox>
 
-#include "../solvers/ThousandSolver.h"
-
 DealPresenter::DealPresenter(QObject *parent) : QObject(parent)
 {}
 
@@ -21,6 +19,16 @@ void DealPresenter::setDeal(std::shared_ptr<Deal> newDeal)
 {
     deal = std::move(newDeal);
     updateAll();
+}
+
+std::shared_ptr<Solver> DealPresenter::getSolver() const
+{
+    return solver;
+}
+
+void DealPresenter::setSolver(std::shared_ptr<Solver> newSolver)
+{
+    solver = std::move(newSolver);
 }
 
 void DealPresenter::nextState()
@@ -43,17 +51,15 @@ void DealPresenter::previousState()
 
 void DealPresenter::evaluateCurrentState()
 {
-    if (deal == nullptr) {
+    if (deal == nullptr || solver == nullptr) {
         return;
     }
 
-    // TODO: Support other state types
-    ThousandState s(static_cast<ThousandState &>(deal->getCurrentState()));
+    auto scores = deal->evaluatePossibleMoves(*solver);
 
     QVector<QPair<Card, int>> estimates;
-    for (const auto &[state, card, score] : s.transitions()) {
-        int estimate = solve(state);
-        estimates.append(qMakePair(card, estimate));
+    for (const auto &[card, score] : scores) {
+        estimates.append(qMakePair(card, score));
     }
 
     emit estimatesUpdated(estimates);
@@ -61,7 +67,9 @@ void DealPresenter::evaluateCurrentState()
 
 void DealPresenter::playCard(Card card)
 {
-    // TODO: Played card validation
+    if (deal == nullptr) {
+        return;
+    }
     deal->playCard(card);
     updateAll();
 }

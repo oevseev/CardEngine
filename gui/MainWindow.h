@@ -5,7 +5,6 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-
 #include <QMainWindow>
 
 #include "DealPresenter.h"
@@ -25,6 +24,5 @@ private:
     DealPresenter *dealPresenter;
     DealView *dealView;
 };
-
 
 #endif //MAINWINDOW_H

@@ -9,6 +9,7 @@
 #include <QPushButton>
 
 #include "SetDealDialog.h"
+#include "../solvers/AlphaBetaSolver.h"
 
 MainWindow::MainWindow(QWidget *parent, const Qt::WindowFlags &flags)
 {
@@ -35,6 +36,7 @@ MainWindow::MainWindow(QWidget *parent, const Qt::WindowFlags &flags)
     setUnifiedTitleAndToolBarOnMac(true);
 
     dealPresenter = new DealPresenter(this);
+    dealPresenter->setSolver(std::make_shared<AlphaBetaSolver>());
     connect(previousButton, SIGNAL(clicked(bool)), dealPresenter, SLOT(previousState()));
     connect(nextButton, SIGNAL(clicked(bool)), dealPresenter, SLOT(nextState()));
     connect(evaluateButton, SIGNAL(clicked(bool)), dealPresenter, SLOT(evaluateCurrentState()));

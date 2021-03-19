@@ -5,7 +5,6 @@
 #ifndef SETDEALDIALOG_H
 #define SETDEALDIALOG_H
 
-
 #include <QDialog>
 #include <QLineEdit>
 
@@ -19,7 +18,7 @@ class SetDealDialog;
 }
 QT_END_NAMESPACE
 
-class SetDealDialog: public QDialog
+class SetDealDialog : public QDialog
 {
     Q_OBJECT
 
@@ -34,6 +33,5 @@ private:
 
     Ui::SetDealDialog *ui;
 };
-
 
 #endif //SETDEALDIALOG_H

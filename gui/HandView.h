@@ -5,7 +5,6 @@
 #ifndef HANDVIEW_H
 #define HANDVIEW_H
 
-
 #include "../models/Card.h"
 #include "CardView.h"
 
@@ -24,6 +23,5 @@ public slots:
 private:
     void recalculatePositions();
 };
-
 
 #endif //HANDVIEW_H

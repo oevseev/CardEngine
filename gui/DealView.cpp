@@ -31,40 +31,54 @@ DealPresenter *DealView::getPresenter() const
 void DealView::setPresenter(DealPresenter *newPresenter)
 {
     if (presenter != nullptr) {
-        disconnect(presenter, SIGNAL(playerCountChanged(int)),
-                   this, SLOT(setPlayerCount(int)));
-        disconnect(presenter, SIGNAL(handChanged(int, const QVector<Card> &)),
-                   this, SLOT(setCards(int, const QVector<Card> &)));
-        disconnect(presenter, SIGNAL(estimatesUpdated(const QVector<QPair<Card, int>> &)),
-                   this, SLOT(setEstimates(const QVector<QPair<Card, int>> &)));
+        disconnect(
+            presenter, SIGNAL(playerCountChanged(int)),
+            this, SLOT(setPlayerCount(int)));
+        disconnect(
+            presenter, SIGNAL(handChanged(int, const QVector<Card> &)),
+            this, SLOT(setCards(int, const QVector<Card> &)));
+        disconnect(
+            presenter, SIGNAL(estimatesUpdated(const QVector<QPair<Card, int>> &)),
+            this, SLOT(setEstimates(const QVector<QPair<Card, int>> &)));
 
-        disconnect(northView, SIGNAL(cardClicked(Card)),
-                   presenter, SLOT(playCard(Card)));
-        disconnect(westView, SIGNAL(cardClicked(Card)),
-                   presenter, SLOT(playCard(Card)));
-        disconnect(eastView, SIGNAL(cardClicked(Card)),
-                   presenter, SLOT(playCard(Card)));
-        disconnect(southView, SIGNAL(cardClicked(Card)),
-                   presenter, SLOT(playCard(Card)));
+        disconnect(
+            northView, SIGNAL(cardClicked(Card)),
+            presenter, SLOT(playCard(Card)));
+        disconnect(
+            westView, SIGNAL(cardClicked(Card)),
+            presenter, SLOT(playCard(Card)));
+        disconnect(
+            eastView, SIGNAL(cardClicked(Card)),
+            presenter, SLOT(playCard(Card)));
+        disconnect(
+            southView, SIGNAL(cardClicked(Card)),
+            presenter, SLOT(playCard(Card)));
     }
 
     presenter = newPresenter;
 
-    connect(presenter, SIGNAL(playerCountChanged(int)),
-            this, SLOT(setPlayerCount(int)));
-    connect(presenter, SIGNAL(handChanged(int, const QVector<Card> &)),
-            this, SLOT(setCards(int, const QVector<Card> &)));
-    connect(presenter, SIGNAL(estimatesUpdated(const QVector<QPair<Card, int>> &)),
-            this, SLOT(setEstimates(const QVector<QPair<Card, int>> &)));
+    connect(
+        presenter, SIGNAL(playerCountChanged(int)),
+        this, SLOT(setPlayerCount(int)));
+    connect(
+        presenter, SIGNAL(handChanged(int, const QVector<Card> &)),
+        this, SLOT(setCards(int, const QVector<Card> &)));
+    connect(
+        presenter, SIGNAL(estimatesUpdated(const QVector<QPair<Card, int>> &)),
+        this, SLOT(setEstimates(const QVector<QPair<Card, int>> &)));
 
-    connect(northView, SIGNAL(cardClicked(Card)),
-            presenter, SLOT(playCard(Card)));
-    connect(westView, SIGNAL(cardClicked(Card)),
-            presenter, SLOT(playCard(Card)));
-    connect(eastView, SIGNAL(cardClicked(Card)),
-            presenter, SLOT(playCard(Card)));
-    connect(southView, SIGNAL(cardClicked(Card)),
-            presenter, SLOT(playCard(Card)));
+    connect(
+        northView, SIGNAL(cardClicked(Card)),
+        presenter, SLOT(playCard(Card)));
+    connect(
+        westView, SIGNAL(cardClicked(Card)),
+        presenter, SLOT(playCard(Card)));
+    connect(
+        eastView, SIGNAL(cardClicked(Card)),
+        presenter, SLOT(playCard(Card)));
+    connect(
+        southView, SIGNAL(cardClicked(Card)),
+        presenter, SLOT(playCard(Card)));
 }
 
 void DealView::setCards(int playerIndex, const QVector<Card> &cards)
