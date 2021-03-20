@@ -10,13 +10,14 @@
 std::pair<int, std::vector<PreferansState>> AlphaBetaSolver::evaluate(const PreferansDeal &deal, const PreferansState &state)
 {
     // TODO: More beautiful way to invalidate cache on new deal
+    // TODO: Recalculate incomplete scores
     if (&deal != lastDeal) {
         score.clear();
         lastDeal = &deal;
     }
 
     // TODO: Return best sequence of moves
-    return std::make_pair(evaluateAlphaBeta(deal, state), std::vector<PreferansState>{});
+    return {evaluateAlphaBeta(deal, state), std::vector<PreferansState>{}};
 }
 
 std::pair<int, std::vector<ThousandState>> AlphaBetaSolver::evaluate(const ThousandDeal &deal, const ThousandState &state)
@@ -25,13 +26,14 @@ std::pair<int, std::vector<ThousandState>> AlphaBetaSolver::evaluate(const Thous
         score.clear();
         lastDeal = &deal;
     }
-    return std::make_pair(evaluateAlphaBeta(deal, state), std::vector<ThousandState>{});
+    return {evaluateAlphaBeta(deal, state), std::vector<ThousandState>{}};
 }
 
 template<typename DealT, typename StateT>
 int AlphaBetaSolver::evaluateAlphaBeta(const DealT &deal, const StateT &state, int alpha, int beta)
 {
     // TODO: Upper and lower possible bound pruning
+    // TODO: Avoid possible under- and overflows
 
     if (score.contains(state)) {
         return score[state];
@@ -47,14 +49,12 @@ int AlphaBetaSolver::evaluateAlphaBeta(const DealT &deal, const StateT &state, i
         currentScore = beta;
     }
 
-    bool isTerminal = true;
-    for (int i = 1; i <= NUM_CARDS; i++) {
-        Card card(i);
-        if (!deal.canPlayCard(state, card)) {
-            continue;
-        }
-        isTerminal = false;
+    auto validMoves = deal.getValidMoves(state);
+    if (validMoves.empty()) {
+        currentScore = 0;
+    }
 
+    for (const auto &card : validMoves) {
         auto [newState, delta] = deal.playCard(state, card, maximizingPlayer);
         int newStateScore = evaluateAlphaBeta(deal, newState, alpha, beta);
         int newScore = newStateScore + delta;
@@ -73,10 +73,6 @@ int AlphaBetaSolver::evaluateAlphaBeta(const DealT &deal, const StateT &state, i
                 break;
             }
         }
-    }
-
-    if (isTerminal) {
-        currentScore = 0;
     }
 
     score[state] = currentScore;

@@ -26,6 +26,7 @@ public:
 
     virtual std::pair<int, std::vector<StateT>> evaluateState(Solver &solver, const StateT &state) const = 0;
     [[nodiscard]] virtual bool canPlayCard(const StateT &state, Card card) const;
+    virtual std::vector<Card> getValidMoves(const StateT &state) const;
     virtual std::pair<StateT, int> playCard(const StateT &state, Card card, int player) const = 0;
 
 protected:

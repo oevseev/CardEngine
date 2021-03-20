@@ -3,6 +3,7 @@
 //
 
 #include "DealImpl.h"
+
 #include "preferans/PreferansState.h"
 #include "thousand/ThousandState.h"
 
@@ -52,21 +53,13 @@ std::pair<int, std::vector<State>> DealImpl<StateT>::evaluateCurrentState(Solver
 {
     std::vector<State> result;
     auto [score, states] = evaluateState(solver, *currentState);
-    for (const auto &state : states) {
-        result.push_back(state);
-    }
-    return std::make_pair(score, result);
+    std::copy(states.begin(), states.end(), result.begin());
+    return {score, result};
 }
 
 template<typename StateT>
-bool DealImpl<StateT>::canPlayCard(const StateT &state, Card card) const
+std::vector<Card> DealImpl<StateT>::getValidMoves(const StateT &state) const
 {
-    if (state.status[card.getId()] != CardStatus::IN_HAND ||
-        state.owner[card.getId()] != state.currentPlayer)
-    {
-        return false;
-    }
-
     bool hasTrumps = false, hasLeadSuit = false;
     for (int i = 1; i <= NUM_CARDS; i++) {
         if (state.status[i] != CardStatus::IN_HAND || state.owner[i] != state.currentPlayer) {
@@ -77,16 +70,38 @@ bool DealImpl<StateT>::canPlayCard(const StateT &state, Card card) const
         hasLeadSuit |= cardInHand.suit == state.leadSuit;
     }
 
-    if (state.leadSuit != Suit::NONE) {
-        if (hasLeadSuit && card.suit != state.leadSuit) {
-            return false;
+    std::vector<Card> result;
+    for (int i = 1; i <= NUM_CARDS; i++) {
+        Card card(i);
+
+        if (state.status[card.getId()] != CardStatus::IN_HAND ||
+            state.owner[card.getId()] != state.currentPlayer)
+        {
+            continue;
         }
-        if (!hasLeadSuit && hasTrumps && card.suit != getTrump()) {
-            return false;
+
+        if (state.leadSuit != Suit::NONE) {
+            if (hasLeadSuit && card.suit != state.leadSuit) {
+                continue;
+            }
+            if (!hasLeadSuit && hasTrumps && card.suit != getTrump()) {
+                continue;
+            }
         }
+
+        result.push_back(card);
     }
 
-    return true;
+    return result;
+}
+
+template<typename StateT>
+bool DealImpl<StateT>::canPlayCard(const StateT &state, Card card) const
+{
+    auto validMoves = getValidMoves(state);
+    return std::any_of(validMoves.begin(), validMoves.end(), [&](const auto &c) -> decltype(auto) {
+        return c == card;
+    });
 }
 
 template<typename StateT>
