@@ -151,7 +151,7 @@ QPixmap CardView::getCardPixmap(Card card)
     // TODO: More beautiful way to reuse card pixmaps
     if (!cardPixmaps.contains(id)) {
         // TODO: Use resources instead of file path
-        auto fileName = QString("images/cards/Bitmap%1.bmp").arg(id);
+        auto fileName = QString("resources/images/cards/Bitmap%1.bmp").arg(id);
         QPixmap pixmap(fileName);
 
         // TODO: Preload mask
