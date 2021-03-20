@@ -17,22 +17,22 @@ if (Boost_FOUND)
 endif ()
 
 add_executable(${PROJECT_NAME}
-        main.cpp
-        gui/CardView.cpp
-        gui/DealPresenter.cpp
-        gui/DealView.cpp
-        gui/HandView.cpp
-        gui/MainWindow.cpp
-        gui/SetDealDialog.cpp
-        models/Deal.cpp
-        models/DealImpl.cpp
-        models/State.cpp
-        models/preferans/PreferansDeal.cpp
-        models/preferans/PreferansState.cpp
-        models/thousand/ThousandDeal.cpp
-        models/thousand/ThousandState.cpp
-        solvers/AlphaBetaSolver.cpp
-        solvers/Solver.cpp)
+        src/main.cpp
+        src/gui/CardView.cpp
+        src/gui/DealPresenter.cpp
+        src/gui/DealView.cpp
+        src/gui/HandView.cpp
+        src/gui/MainWindow.cpp
+        src/gui/SetDealDialog.cpp
+        src/models/Deal.cpp
+        src/models/DealImpl.cpp
+        src/models/State.cpp
+        src/models/preferans/PreferansDeal.cpp
+        src/models/preferans/PreferansState.cpp
+        src/models/thousand/ThousandDeal.cpp
+        src/models/thousand/ThousandState.cpp
+        src/solvers/AlphaBetaSolver.cpp
+        src/solvers/Solver.cpp)
 
 if (NOT CMAKE_PREFIX_PATH)
     message(WARNING "CMAKE_PREFIX_PATH is not defined, you may need to set it "
