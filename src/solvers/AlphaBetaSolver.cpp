@@ -9,12 +9,8 @@
 
 std::pair<int, std::vector<PreferansState>> AlphaBetaSolver::evaluate(const PreferansDeal &deal, const PreferansState &state)
 {
-    // TODO: More beautiful way to invalidate cache on new deal
-    // TODO: Recalculate incomplete scores
-    if (&deal != lastDeal) {
-        score.clear();
-        lastDeal = &deal;
-    }
+    // TODO: Reuse evaluation results
+    score.clear();
 
     // TODO: Return best sequence of moves
     return {evaluateAlphaBeta(deal, state), std::vector<PreferansState>{}};
@@ -22,10 +18,7 @@ std::pair<int, std::vector<PreferansState>> AlphaBetaSolver::evaluate(const Pref
 
 std::pair<int, std::vector<ThousandState>> AlphaBetaSolver::evaluate(const ThousandDeal &deal, const ThousandState &state)
 {
-    if (&deal != lastDeal) {
-        score.clear();
-        lastDeal = &deal;
-    }
+    score.clear();
     return {evaluateAlphaBeta(deal, state), std::vector<ThousandState>{}};
 }
 
